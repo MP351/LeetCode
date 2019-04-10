@@ -22,6 +22,28 @@
  *
  * https://leetcode.com/problems/reverse-integer/
  */
+
 public class ReverseInteger {
-    //TODO: implement
+	public int reverse(int x) {
+		String ans;
+		if (x < 0) {
+			x *= -1;
+			ans = "-";
+		} else {
+			ans = "";
+		}
+		String in = String.valueOf(x);
+		for (int i=in.length()-1;i>=0;i--) {
+			ans += in.charAt(i);
+		}
+
+		int answ;
+		try {
+			answ = Integer.parseInt(ans);
+		} catch (Exception e) {
+			return 0;
+		}
+
+		return answ;
+	}
 }

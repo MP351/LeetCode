@@ -1,3 +1,5 @@
+import java.util.regex.Pattern;
+
 /**
  * Implement atoi which converts a string to an integer.
  * The function first discards as many whitespace characters as necessary until the first non-whitespace character is found.
@@ -46,5 +48,92 @@
  */
 
 public class StringToInteger {
-    //TODO: implement
+	public int myBiAtoi(String str) {
+		int i=0;
+		int mul = 1;
+		if (str.isEmpty())
+			return 0;
+		while (str.charAt(i) == ' ') {
+			i++;
+			if (str.length() == i)
+				return 0;
+		}
+
+		if (str.charAt(i) == '-') {
+			mul = -1;
+			i++;
+		} else if (str.charAt(i) == '+') {
+			i++;
+		} else if (!isNumber(str.charAt(i))) {
+			return 0;
+		}
+
+		StringBuilder number = new StringBuilder();
+		for (;i<str.length();i++) {
+			if (isNumber(str.charAt(i)))
+				number.append(str.charAt(i));
+			else
+				break;
+		}
+		if (number.toString().length() < 1)
+			return 0;
+
+		int num;
+		try {
+			num = Integer.parseInt(number.toString());
+		} catch (Exception e) {
+			if (mul > 0) {
+				return Integer.MAX_VALUE;
+			} else {
+				return Integer.MIN_VALUE;
+			}
+		}
+		return num*mul;
+	}
+
+	private boolean isNumber(Character ch) {
+		return ch > 47 && ch < 58;
+	}
+
+	public int myAtoi(String str) {
+		Pattern pattern1 = Pattern.compile("^\\s*[-+]?\\d+(\\D*|\\d*)*");
+		if (!pattern1.matcher(str).matches())
+			return 0;
+
+		int mul = 1;
+
+		Pattern whiteSpace = Pattern.compile("^\\s*");
+		Pattern letters = Pattern.compile("\\D+");
+		String[] arr1 = whiteSpace.split(str);
+		if (arr1[0].isEmpty()) {
+			if (arr1[1].charAt(0) == '-') {
+				mul = -1;
+			}
+		} else {
+			if (arr1[0].charAt(0) == '-')
+				mul = -1;
+		}
+		String[] arr2 = null;
+		for (int i=0;i<arr1.length;i++) {
+			arr2 = letters.split(arr1[i]);
+		}
+
+		String output = "";
+		for (String string : arr2) {
+			if (!string.isEmpty())
+				output += string;
+		}
+
+		int answ;
+		try {
+			answ = Integer.parseInt(output);
+		} catch (Exception e) {
+			if (mul > 0)
+				return Integer.MAX_VALUE;
+			else
+				return Integer.MIN_VALUE;
+		}
+		System.out.println(pattern1.matcher(str).matches());
+		return answ;
+	}
 }
