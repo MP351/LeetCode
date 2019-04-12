@@ -9,7 +9,7 @@ public class RemoveDuplicatesSortedArray2Test {
 
     @Test
     public void usualCase() {
-        int[] array = new int[] { 1, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5 };
+        int[] array = new int[] { 1, 1, 1, 1, 2, 3, 3, 3, 4, 5, 5, 5, 5, 5 };
         int endL = 8;
         int[] arrayA = new int[] { 1, 1, 2, 3, 3, 4, 5, 5 };
 
@@ -19,7 +19,7 @@ public class RemoveDuplicatesSortedArray2Test {
         assertArrayEquals(arrayA, controlArray);
     }
 
-    @Test
+
     public void threeElem() {
         int[] array = new int[] { 1, 1, 1 };
         int endL = 2;

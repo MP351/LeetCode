@@ -34,25 +34,24 @@ public class RemoveDuplicatesSortedArray2 {
         if (nums.length < 3)
             return nums.length;
 
-        int c = 1;
+        int count = 1;
         int ret = 1;
-        for (int i=1;i<nums.length;i++) {
+        int movedCount = 0;
+        for (int i=1;i<nums.length-movedCount;) {
             if (nums[i] == nums[i - 1]) {
-                if (c < 2) {
-                    c++;
+                if (count < 2) {
+                    count++;
                     ret++;
+                    i++;
                 } else {
-                    //moveToTheEnd(nums, i);
-
+                    moveToTheEnd(nums, i);
+                    movedCount++;
                 }
             } else {
-                c = 1;
+                count = 1;
                 ret++;
+                i++;
             }
-        }
-
-        for (int i=0;i<nums.length;i++) {
-            System.out.print(nums[i] + " ");
         }
         return ret;
     }
