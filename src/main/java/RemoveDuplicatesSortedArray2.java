@@ -30,7 +30,7 @@
  */
 
 public class RemoveDuplicatesSortedArray2 {
-    public int removeDuplicates(int[] nums) {
+    public int removeDuplicates1(int[] nums) {
         if (nums.length < 3)
             return nums.length;
 
@@ -62,5 +62,19 @@ public class RemoveDuplicatesSortedArray2 {
             nums[j] = nums[j+1];
             nums[j+1] = tmp;
         }
+    }
+
+
+    //From Discussion
+    public int removeDuplicates(int[] nums) {
+        if (nums.length <= 2)
+            return nums.length;
+        int count = 2, last = nums[0];
+        for (int i = 2; i < nums.length; i++)
+            if (nums[i] != last) {
+                last = nums[i - 1];
+                nums[count++] = nums[i];
+            }
+        return count;
     }
 }
