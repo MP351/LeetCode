@@ -20,19 +20,25 @@ public class IntervalListIntersections {
 
         Interval tmp;
         ArrayList<Interval> al = new ArrayList<>();
-        for (Interval in1 : A) {
-            for (Interval in2 : B) {
-                if ((tmp = getIntersection(in1, in2)) != null) {
-                    al.add(tmp);
-                }
+        for (int i=0, j=0;i<A.length && j<B.length;) {
+            if (A[i].end < B[j].start)
+                i++;
+            else if (B[j].end < A[i].start)
+                j++;
+            else if ((tmp = getIntersection(A[i], B[j])) != null) {
+                al.add(tmp);
+                if (A[i].end < B[j].end)
+                    i++;
+                else
+                    j++;
             }
         }
         return al.toArray(new Interval[0]);
     }
 
     private Interval getIntersection(Interval in1, Interval in2) {
-        int begin = 0;
-        int end = 0;
+        int begin;
+        int end;
 
         if ((begin = Integer.max(in1.start, in2.start)) <= (end = Integer.min(in1.end, in2.end)))
             return new Interval(begin, end);
