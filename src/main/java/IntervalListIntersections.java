@@ -1,5 +1,7 @@
 import ds.Interval;
 
+import java.util.ArrayList;
+
 /**
  * Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
  * Return the intersection of these two interval lists.
@@ -16,13 +18,30 @@ public class IntervalListIntersections {
         if (A.length == 0 || B.length == 0)
             return new Interval[0];
 
-        Interval[] shortI = A.length < B.length ? A : B;
-        Interval[] longI = A.length >= B.length ? A : B;
-        for (int i=0;i<shortI.length;i++) {
-            for (int j=0;j<longI.length;j++) {
-                //TODO:
+        Interval tmp;
+        ArrayList<Interval> al = new ArrayList<>();
+        for (int i=0, j=0;i<A.length && j<B.length;) {
+            if (A[i].end < B[j].start)
+                i++;
+            else if (B[j].end < A[i].start)
+                j++;
+            else if ((tmp = getIntersection(A[i], B[j])) != null) {
+                al.add(tmp);
+                if (A[i].end < B[j].end)
+                    i++;
+                else
+                    j++;
             }
         }
+        return al.toArray(new Interval[0]);
+    }
+
+    private Interval getIntersection(Interval in1, Interval in2) {
+        int begin;
+        int end;
+
+        if ((begin = Integer.max(in1.start, in2.start)) <= (end = Integer.min(in1.end, in2.end)))
+            return new Interval(begin, end);
         return null;
     }
 }
