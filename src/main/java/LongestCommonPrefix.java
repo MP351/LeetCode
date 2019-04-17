@@ -9,20 +9,25 @@ import java.util.HashMap;
  */
 
 public class LongestCommonPrefix {
-	public String longestCommonPrefix1(String[] strs) {
+	public String longestCommonPrefix(String[] strs) {
 		if (strs == null || strs.length == 0)
 			return "";
 
+		StringBuilder sb = new StringBuilder();
 		for (int i=0;i<strs[0].length();i++) {
+			char ch = strs[0].charAt(i);
 			for (int j=0;j<strs.length;j++) {
-				//if (strs[j].charAt(i))
-				//TODO:
+				if (strs[j].length()-1 < i || strs[j].charAt(i) != ch)
+					return sb.toString();
 			}
+			sb.append(ch);
 		}
-		return "";
+		return sb.toString();
 	}
 
-	public String longestCommonPrefix(String[] strs) {
+
+	//From discussion
+	public String longestCommonPrefix2(String[] strs) {
 		if (strs.length == 0) return "";
 		String prefix = strs[0];
 		for (int i = 1; i < strs.length; i++)

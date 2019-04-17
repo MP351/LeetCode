@@ -3,7 +3,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class LongestCommonPrefixTest {
-	LongestCommonPrefix lcp = new LongestCommonPrefix();
+	private LongestCommonPrefix lcp = new LongestCommonPrefix();
 
 	@Test
 	public void emptyArray() {
@@ -26,5 +26,11 @@ public class LongestCommonPrefixTest {
 	public void twoCommonPrefixes() {
 		String[] array = new String[] { "flower","flow","flight", "fli", "flit" };
 		assertEquals("fl", lcp.longestCommonPrefix(array));
+	}
+
+	@Test
+	public void difLength() {
+		String[] array = new String[] { "aa", "a" };
+		assertEquals("a", lcp.longestCommonPrefix(array));
 	}
 }
