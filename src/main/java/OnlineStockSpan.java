@@ -8,16 +8,13 @@ import java.util.ArrayList;
  * https://leetcode.com/problems/online-stock-span/
  */
 public class OnlineStockSpan {
-    //TODO:
-    //private ArrayList<Integer> arrayList;
-    private int[] array;
     private int last = 0;
     public OnlineStockSpan() {
-        //arrayList = new ArrayList<>(100);
-        array = new int[10100];
+        array = new int[10000];
     }
 
-    public int next(int price) {
+    private int[] array;
+    public int next1(int price) {
         if (price < 1)
             return 0;
         array[last++] = price;
@@ -30,5 +27,21 @@ public class OnlineStockSpan {
                 break;
         }
         return count;
+    }
+
+    private int[][] martix = new int[10000][2];
+    public int next(int price) {
+        if (price < 1)
+            return 0;
+
+        int w = 1;
+        while (last > 0 && martix[last-1][0] <= price) {
+            w += martix[--last][1];
+        }
+
+        martix[last][0] = price;
+        martix[last][1] = w;
+
+        return martix[last++][1];
     }
 }
