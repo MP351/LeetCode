@@ -58,16 +58,20 @@ public class NextGreaterElement3Test {
 	public void sortNumStr1() {
 		String input = "51247";
 		String output = "12457";
+		char[] ch = input.toCharArray();
 
-		assertEquals(output, nge.sortNumString(input));
+		nge.sortNumString(ch, 0);
+		assertArrayEquals(output.toCharArray(), ch);
 	}
 
 	@Test
 	public void sortNumStr2() {
 		String input = "51";
 		String output = "15";
+		char[] ch = input.toCharArray();
 
-		assertEquals(output, nge.sortNumString(input));
+		nge.sortNumString(ch, 0);
+		assertArrayEquals(output.toCharArray(), ch);
 	}
 
 
@@ -75,7 +79,25 @@ public class NextGreaterElement3Test {
 	public void sortNumStr3() {
 		String input = "5";
 		String output = "5";
+		char[] ch = input.toCharArray();
 
-		assertEquals(output, nge.sortNumString(input));
+		nge.sortNumString(ch, 0);
+		assertArrayEquals(output.toCharArray(), ch);
+	}
+
+	@Test
+	public void findingCloserBiggerNum() {
+		char[] inStr = { '1', '2', '3', '6', '5', '4' };
+		int inOffset = 1;
+
+		assertEquals(2, nge.getCloserBigger(inStr, inOffset));
+	}
+
+	@Test
+	public void findingCloserBiggerTwoNum() {
+		char[] inStr = { '5', '2', '4', '7' };
+		int inOffset = 2;
+
+		assertEquals(3, nge.getCloserBigger(inStr, inOffset));
 	}
 }

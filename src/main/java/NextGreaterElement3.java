@@ -10,39 +10,47 @@ public class NextGreaterElement3 {
 		if (n < 12)
 			return -1;
 
-		//FIXME
 		String str = String.valueOf(n);
-		StringBuilder sb = new StringBuilder(String.valueOf(n));
-		for (int i=str.length()-2;i>=0;i--) {
-			for (int j=i+1;j<str.length();j++) {
-				if (sb.charAt(i) < str.charAt(j)) {
-					char tmp = sb.charAt(i);
-					sb.setCharAt(i, sb.charAt(j));
-					sb.setCharAt(j, tmp);
+		char[] chars = str.toCharArray();
+		for (int i=chars.length-2;i>=0;i--) {
+			int index;
+			if ((index = getCloserBigger(chars, i)) != -1) {
+				char tmp = chars[i];
+				chars[i] = chars[index];
+				chars[index] = tmp;
 
-					sb.replace(i+1, sb.length(), sortNumString(sb.substring(i+1)));
-
-					if (Long.parseLong(sb.toString()) > Integer.MAX_VALUE)
-						return -1;
-
-					return Integer.parseInt(sb.toString());
-				}
+				sortNumString(chars, i+1);
+				long ret = Long.parseLong(new String(chars));
+				if (ret <= Integer.MAX_VALUE)
+					return (int) ret;
 			}
 		}
 		return -1;
 	}
 
-	public String sortNumString(String str) {
-		StringBuilder sb = new StringBuilder(str);
-		for (int i=0;i<str.length();i++) {
-			for (int j=i;j<str.length();j++) {
-				if (sb.charAt(i) > sb.charAt(j)) {
-					char tmp = sb.charAt(i);
-					sb.setCharAt(i, sb.charAt(j));
-					sb.setCharAt(j, tmp);
+	public void sortNumString(char[] str, int offset) {
+		for (int i=offset;i<str.length;i++) {
+			for (int j=i;j<str.length;j++) {
+				if (str[i] > str[j]) {
+					char tmp = str[i];
+					str[i] = str[j];
+					str[j] = tmp;
 				}
 			}
 		}
-		return sb.toString();
+	}
+
+	public int getCloserBigger(char[] str, int offset) {
+		int closer = Integer.MAX_VALUE;
+		int retOffset = -1;
+		char ch = str[offset];
+
+		for (int i=str.length-1;i>offset;i--) {
+			if (str[i] > ch && str[i] < closer) {
+				closer = str[i];
+				retOffset = i;
+			}
+		}
+		return retOffset;
 	}
 }
